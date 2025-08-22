@@ -1,0 +1,137 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape {{{name}}} } \\ \vspace{1pt}
+    \small \raisebox{-0.1\height}\faPhone\ {{{phone}}} ~ \href{mailto:{{{email}}}}{\raisebox{-0.2\height}\faEnvelope\  \underline{ {{{email}}} }} ~ 
+    \href{https://{{{linkedin}}}}{\raisebox{-0.2\height}\faLinkedin\ \underline{ {{{linkedin}}} }}  ~ 
+    \href{https://{{{github}}}}{\raisebox{-0.2\height}\faGithub\ \underline{ {{{github}}} }}
+    \vspace{-8pt}
+\end{center}
+
+
+{{#main_sections}}
+    \section{ {{{title}}} }
+    \resumeSubHeadingListStart
+        {{#items}}
+            {{#university}}
+                \resumeSubheading
+                    { {{{university}}} }{ {{{dates}}} }
+                    { {{{degree}}} }{ {{{location}}} }
+            {{/university}}
+
+            {{#company}}
+                \resumeSubheading
+                    { {{{company}}} }{ {{{dates}}} }
+                    { {{{role}}} }{ {{{location}}} }
+                \resumeItemListStart
+                    {{#points}}
+                        \resumeItem{ {{{.}} }}
+                    {{/points}}
+                \resumeItemListEnd
+            {{/company}}
+
+            {{#projectName}}
+                % --- THIS IS THE CORRECTED LINE ---
+                \resumeProjectHeading
+                    { \textbf{ {{{projectName}}} } $|$ \emph{ {{{tech}}} } }
+                    { {{{date}}} }
+                \resumeItemListStart
+                    {{#points}}
+                        \resumeItem{ {{{.}} }}
+                    {{/points}}
+                \resumeItemListEnd
+            {{/projectName}}
+        {{/items}}
+    \resumeSubHeadingListEnd
+{{/main_sections}}
+
+
+{{#skills_section}}
+    \section{ {{{title}}} }
+    \begin{itemize}[leftmargin=0.15in, label={}]
+        \small{\item{
+            {{#items}}
+                \textbf{ {{{category}}} }{: {{{list}}} } \\
+            {{/items}}
+        }}
+    \end{itemize}
+{{/skills_section}}
+
+
+\end{document}

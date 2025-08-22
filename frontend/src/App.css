@@ -1,0 +1,99 @@
+/* frontend/src/App.css */
+
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-container {
+  flex: 1;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.panel-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.resize-handle {
+  background-color: #373c42;
+  width: 5px;
+  cursor: col-resize;
+  z-index: 10;
+}
+
+/* === Editor Panel Styles === */
+.editor-panel {
+  background-color: #282c34;
+  height: 100%;
+  overflow: hidden;
+}
+
+.yaml-editor-container {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Header button styles are now handled by Tailwind CSS */
+
+.error-message {
+  padding: 1rem;
+  color: #ff5555;
+  background-color: #282c34;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+/* === PDF Panel Styles (The Overleaf Look) === */
+.pdf-panel {
+  background-color: #f0f1f2;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-viewer-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.pdf-viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+/* Target the rendered PDF page to add the shadow and margin */
+.pdf-viewer .react-pdf__Page {
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  max-width: 100%;
+  height: auto !important;
+}
+
+.pdf-viewer .react-pdf__Page canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.pdf-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #888;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+}
