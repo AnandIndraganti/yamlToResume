@@ -50,5 +50,5 @@ export const trackEvent = {
 
 // Check if analytics should be enabled (only in production)
 export const isAnalyticsEnabled = () => {
-  return process.env.NODE_ENV === "production" || import.meta.env.PROD;
+  return import.meta.env.PROD;
 };
