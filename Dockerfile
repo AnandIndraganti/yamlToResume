@@ -17,12 +17,12 @@ WORKDIR /app
 
 # Copy backend files
 COPY backend/package.json backend/package-lock.json ./
-RUN npm ci --only=production
+RUN npm ci
 
 COPY backend/ .
 
 # Build TypeScript
-RUN npx tsc
+RUN npm run build
 
 # Expose port
 EXPOSE 8080
