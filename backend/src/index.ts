@@ -12,7 +12,7 @@ import { promisify } from "util";
 const execAsync = promisify(execFile);
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = parseInt(process.env.PORT || "8080", 10);
 
 function escapeLaTeX(str: string): string {
   return str
