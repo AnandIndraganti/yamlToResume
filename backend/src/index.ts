@@ -49,12 +49,27 @@ function escapeData(data: any): any {
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || [
+    origin: [
+      process.env.FRONTEND_URL,
+      "https://yaml-to-resume.vercel.app",
       "http://localhost:5173",
       "http://localhost:3000",
-    ],
+    ].filter(Boolean),
     credentials: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
+);
+
+// Add logging to debug CORS
+console.log(
+  "🔧 CORS configured for origins:",
+  [
+    process.env.FRONTEND_URL,
+    "https://yaml-to-resume.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+  ].filter(Boolean)
 );
 app.use(express.json({ limit: "1mb" }));
 

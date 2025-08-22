@@ -117,6 +117,7 @@ export default function AppPage() {
     setIsLoading(true);
     setError(null);
     try {
+      console.log("🚀 Calling API:", API_ENDPOINTS.COMPILE);
       const response = await fetch(API_ENDPOINTS.COMPILE, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
