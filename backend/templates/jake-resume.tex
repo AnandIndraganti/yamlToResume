@@ -18,7 +18,7 @@
 \usepackage{fancyhdr}
 \usepackage[english]{babel}
 \usepackage{tabularx}
-\usepackage{fontawesome5}
+% \usepackage{fontawesome5} % Commented out for deployment compatibility
 \usepackage{multicol}
 \setlength{\multicolsep}{-3.0pt}
 \setlength{\columnsep}{-1pt}
@@ -116,9 +116,9 @@
 %----------HEADING----------
 \begin{center}
     {\Huge \scshape {{{name}}}} \\ \vspace{1pt}
-    \small \raisebox{-0.1\height}\faPhone\ {{{phone}}} ~ \href{mailto:{{{email}}}}{\raisebox{-0.2\height}\faEnvelope\  \underline{ {{{email}}} }}  ~
-    \href{https://{{{linkedin}}}}{\raisebox{-0.2\height}\faLinkedin\ \underline{ {{{linkedin}}} }}  ~
-    \href{https://{{{github}}}}{\raisebox{-0.2\height}\faGithub\ \underline{ {{{github}}} }}
+    \small {{{phone}}} ~ \href{mailto:{{{email}}}}{\underline{ {{{email}}} }}  ~
+    \href{https://{{{linkedin}}}}{\underline{ {{{linkedin}}} }}  ~
+    \href{https://{{{github}}}}{\underline{ {{{github}}} }}
     \vspace{-8pt}
 \end{center}
 

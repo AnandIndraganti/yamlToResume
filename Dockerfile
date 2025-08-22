@@ -3,17 +3,21 @@
 # Backend Stage
 FROM node:18-bullseye-slim as backend
 
-# Install LaTeX system - minimal packages first
+# Install LaTeX system - core packages first
 RUN apt-get update && apt-get install -y --no-install-recommends \
     texlive-latex-base \
     texlive-latex-recommended \
     texlive-fonts-recommended \
+    texlive-latex-extra \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Try to install extra packages, continue if it fails
+# Install FontAwesome and additional packages if available
 RUN apt-get update && \
-    (apt-get install -y --no-install-recommends texlive-latex-extra || true) && \
+    (apt-get install -y --no-install-recommends \
+    texlive-fonts-extra \
+    fonts-font-awesome \
+    || echo "Some font packages unavailable, continuing...") && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
