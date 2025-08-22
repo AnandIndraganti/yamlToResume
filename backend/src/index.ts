@@ -1,4 +1,5 @@
 // backend/src/index.ts
+console.log("🚀 Starting backend application...");
 import express, { Request, Response } from "express";
 import cors from "cors";
 import yaml from "js-yaml";
@@ -11,8 +12,10 @@ import { mkdtemp, rm } from "fs/promises";
 import { promisify } from "util";
 const execAsync = promisify(execFile);
 
+console.log("📦 Creating Express app...");
 const app = express();
 const port = parseInt(process.env.PORT || "8080", 10);
+console.log("🔌 Port configured:", port);
 
 function escapeLaTeX(str: string): string {
   return str
@@ -180,6 +183,24 @@ app.post("/compile", async (req: Request, res: Response) => {
   }
 });
 
-app.listen(port, "0.0.0.0", () => {
-  console.log(`✅ Server is running at http://0.0.0.0:${port}`);
+console.log("🎯 Attempting to start server...");
+
+app
+  .listen(port, "0.0.0.0", () => {
+    console.log(`✅ Server is running at http://0.0.0.0:${port}`);
+  })
+  .on("error", (err) => {
+    console.error("❌ Server failed to start:", err);
+    process.exit(1);
+  });
+
+// Add process error handlers
+process.on("uncaughtException", (err) => {
+  console.error("❌ Uncaught Exception:", err);
+  process.exit(1);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("❌ Unhandled Rejection at:", promise, "reason:", reason);
+  process.exit(1);
 });
