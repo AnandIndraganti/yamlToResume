@@ -1,10 +1,11 @@
 // App Page - Resume Generator
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { Link } from "react-router-dom";
 import YamlEditor from "../components/YamlEditor";
 import PdfViewer from "../components/PdfViewer";
 import { API_ENDPOINTS } from "../config/api";
+import { trackEvent } from "../lib/analytics";
 
 const initialYaml = `name: First Last
 phone: "123-456-7890"
@@ -113,6 +114,11 @@ export default function AppPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Track page visit
+  useEffect(() => {
+    trackEvent.appPageVisited();
+  }, []);
+
   const handleCompile = async () => {
     setIsLoading(true);
     setError(null);
@@ -126,6 +132,7 @@ export default function AppPage() {
 
       if (!response.ok) {
         const errorText = await response.text();
+        trackEvent.compilationError(response.status.toString());
         throw new Error(errorText);
       }
 
@@ -137,10 +144,23 @@ export default function AppPage() {
 
       const newPdfUrl = URL.createObjectURL(blob);
       setPdfUrl(newPdfUrl);
+      
+      // Track successful compilation
+      trackEvent.resumeCompiled();
     } catch (err: any) {
       setError(err.message);
+      trackEvent.compilationError(err.message);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Handle YAML changes with analytics
+  const handleYamlChange = (value: string) => {
+    setYaml(value);
+    // Track YAML editing (debounced to avoid too many events)
+    if (value.length > 0 && value.length % 100 === 0) {
+      trackEvent.yamlEdited(value.length);
     }
   };
 
@@ -210,6 +230,7 @@ export default function AppPage() {
                 <a
                   href={pdfUrl}
                   download="resume.pdf"
+                  onClick={() => trackEvent.pdfDownloaded()}
                   className="text-gray-300 hover:text-white hover:bg-gray-700 focus:ring-4 focus:ring-gray-600 font-medium rounded-lg text-sm px-3 lg:px-4 py-1.5 lg:py-2 focus:outline-none transition-all duration-200 border border-gray-600 hover:border-gray-500"
                 >
                   Download PDF
@@ -226,7 +247,7 @@ export default function AppPage() {
           <Panel defaultSize={50} minSize={20}>
             <div className="panel-content editor-panel">
               <div className="yaml-editor-container">
-                <YamlEditor value={yaml} onChange={setYaml} />
+                <YamlEditor value={yaml} onChange={handleYamlChange} />
               </div>
               {error && <pre className="error-message">{error}</pre>}
             </div>
