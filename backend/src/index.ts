@@ -49,25 +49,16 @@ function escapeData(data: any): any {
 
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL || "https://yaml-to-resume.vercel.app",
-      "https://yaml-to-resume.vercel.app",
-      "http://localhost:5173",
-      "http://localhost:3000",
-    ],
-    credentials: true,
+    origin: "*", // Temporarily allow all origins for debugging
+    credentials: false,
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type"],
   })
 );
 
 // Add logging to debug CORS
-console.log("🔧 CORS configured for origins:", [
-  process.env.FRONTEND_URL || "https://yaml-to-resume.vercel.app",
-  "https://yaml-to-resume.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:3000",
-]);
+console.log("🔧 CORS configured to allow all origins for debugging");
+console.log("🌐 FRONTEND_URL:", process.env.FRONTEND_URL);
 app.use(express.json({ limit: "1mb" }));
 
 async function findPdflatex(): Promise<string> {
