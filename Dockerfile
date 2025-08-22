@@ -3,15 +3,19 @@
 # Backend Stage
 FROM node:18-bullseye-slim as backend
 
-# Install LaTeX system
+# Install LaTeX system - minimal packages first
 RUN apt-get update && apt-get install -y --no-install-recommends \
     texlive-latex-base \
     texlive-latex-recommended \
     texlive-fonts-recommended \
-    texlive-latex-extra \
-    texlive-fonts-extra \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Try to install extra packages, continue if it fails
+RUN apt-get update && \
+    (apt-get install -y --no-install-recommends texlive-latex-extra || true) && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
